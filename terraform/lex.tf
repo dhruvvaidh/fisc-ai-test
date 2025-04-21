@@ -172,191 +172,6 @@ resource "aws_lexv2models_bot_locale" "english_locale" {
   depends_on = [aws_lexv2models_bot.finance_assistant]
 }
 
-# resource "null_resource" "create_lex_alias" {
-#   triggers = {
-#     bot_id = aws_lexv2models_bot.finance_assistant.id
-#   }
-
-#   provisioner "local-exec" {
-#     when    = create
-#     command = <<EOT
-#       set -xe
-
-#       # ✅First, verify the slot priority is set correctly
-#       echo "Verifying slot priorities are properly set..."
-#       TRANSACTIONS_INTENT_ID=$(aws lexv2-models list-intents \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-version DRAFT \
-#         --locale-id en_US \
-#         --query "intentSummaries[?intentName=='GetRecentTransactions'].intentId" \
-#         --output text)
-        
-#       if [[ ! -z "$TRANSACTIONS_INTENT_ID" ]]; then
-#         INTENT_INFO=$(aws lexv2-models describe-intent \
-#           --bot-id ${self.triggers.bot_id} \
-#           --bot-version DRAFT \
-#           --locale-id en_US \
-#           --intent-id $TRANSACTIONS_INTENT_ID)
-          
-#         # Check if slotPriorities exists
-#         if ! echo "$INTENT_INFO" | jq -e '.slotPriorities' > /dev/null; then
-#           echo "⚠️ No slot priorities found for GetRecentTransactions intent. Setting them now..."
-          
-#           # Get slots for this intent
-#           SLOT_ID=$(aws lexv2-models list-slots \
-#             --bot-id ${self.triggers.bot_id} \
-#             --bot-version DRAFT \
-#             --locale-id en_US \
-#             --intent-id $TRANSACTIONS_INTENT_ID \
-#             --query "slotSummaries[?slotName=='NumberOfTransactions'].slotId" \
-#             --output text)
-            
-#           if [[ ! -z "$SLOT_ID" ]]; then
-#             # Create a temporary file with the intent configuration
-#             echo "$INTENT_INFO" | jq 'del(.creationDateTime, .lastUpdatedDateTime, .version)' > temp_intent.json
-            
-#             # Add slot priority
-#             jq --arg slot_id "$SLOT_ID" '.slotPriorities = [{"priority": 1, "slotId": $slot_id}]' temp_intent.json > updated_intent.json
-            
-#             # Update the intent
-#             aws lexv2-models update-intent \
-#               --bot-id ${self.triggers.bot_id} \
-#               --bot-version DRAFT \
-#               --locale-id en_US \
-#               --intent-id $TRANSACTIONS_INTENT_ID \
-#               --cli-input-json file://updated_intent.json
-              
-#             echo "✅ Slot priorities updated for GetRecentTransactions intent"
-#           else
-#             echo "⚠️ No NumberOfTransactions slot found!"
-#           fi
-#         else
-#           echo "✅ Slot priorities already set for GetRecentTransactions intent"
-#         fi
-#       else
-#         echo "⚠️ GetRecentTransactions intent not found!"
-#       fi
-
-
-#       # Step 1: Build the DRAFT locale (if not already built)
-#       aws lexv2-models build-bot-locale \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-version DRAFT \
-#         --locale-id en_US
-
-#       # Wait for build to complete
-#       echo "🕒 Waiting for locale build to finish..."
-#       for i in {1..60}; do
-#         STATUS=$(aws lexv2-models describe-bot-locale \
-#           --bot-id ${self.triggers.bot_id} \
-#           --bot-version DRAFT \
-#           --locale-id en_US \
-#           --query 'botLocaleStatus' \
-#           --output text)
-
-#         echo "⏳ Current locale status: $STATUS"
-
-#         if [[ -z "$STATUS" ]]; then
-#           echo "⚠️  Failed to fetch locale status. Exiting."
-#           exit 1
-#         fi
-
-#         if [[ "$STATUS" == "Built" ]]; then
-#           echo "✅ Locale build complete."
-#           break
-#         elif [[ "$STATUS" == "Failed" ]]; then
-#           echo "❌ Locale build failed. Fetching failure reasons..."
-#           aws lexv2-models describe-bot-locale \
-#             --bot-id ${self.triggers.bot_id} \
-#             --bot-version DRAFT \
-#             --locale-id en_US \
-#             --query 'failureReasons' \
-#             --output text
-#           exit 1
-#         fi
-
-#         sleep 5
-#       done
-
-
-#       # Step 2: Create a version from the DRAFT
-#       VERSION=$(aws lexv2-models create-bot-version \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-version-locale-specification '{"en_US":{"sourceBotVersion":"DRAFT"}}' \
-#         --query 'botVersion' \
-#         --output text)
-
-#       echo "✅ Published Lex bot version: $VERSION"
-
-#       sleep 10
-
-#       # Step 3: Create or update alias and enable locale
-#       aws lexv2-models create-bot-alias \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-alias-name "financeAssistantAlias" \
-#         --bot-version "$VERSION" \
-#         --bot-alias-locale-settings '{"en_US":{"enabled":true}}' || \
-#       aws lexv2-models update-bot-alias \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-alias-id $(aws lexv2-models list-bot-aliases \
-#           --bot-id ${self.triggers.bot_id} \
-#           --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botAliasId" \
-#           --output text) \
-#         --bot-alias-name "financeAssistantAlias" \
-#         --bot-version "$VERSION" \
-#         --bot-alias-locale-settings '{"en_US":{"enabled":true}}'
-
-#       echo "✅ Lex alias created and locale enabled."
-
-#       INTENT_ID=$(aws lexv2-models list-intents \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-version DRAFT \
-#         --locale-id en_US \
-#         --query "intentSummaries[?intentName=='greeting_intent'].intentId" \
-#         --output text)
-
-#       if [[ ! -z "$INTENT_ID" ]]; then
-#       # Get the intent config
-#         aws lexv2-models describe-intent \
-#           --bot-id ${self.triggers.bot_id} \
-#           --bot-version DRAFT \
-#           --locale-id en_US \
-#           --intent-id $INTENT_ID > tmp_intent.json
-
-#       # Inject fulfillment hook
-#       jq '.fulfillmentCodeHook = {"enabled": true}' tmp_intent.json > updated_intent.json
-
-#       # Apply update
-#       aws lexv2-models update-intent \
-#         --bot-id ${self.triggers.bot_id} \
-#         --bot-version DRAFT \
-#         --locale-id en_US \
-#         --intent-id $INTENT_ID \
-#         --cli-input-json file://updated_intent.json
-
-
-#       # Step 4: Output alias ID for use in Lambda
-#       ALIAS_ID=$(aws lexv2-models list-bot-aliases \
-#         --bot-id ${self.triggers.bot_id} \
-#         --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botAliasId" \
-#         --output text)
-#       echo "ALIAS_ID resolved: $ALIAS_ID"
-#       echo "{\"lex_bot_alias_id\": \"$ALIAS_ID\"}" > lex_alias.json
-
-#     EOT
-#     interpreter = ["bash", "-c"]
-#   }
-
-#   depends_on = [
-#     aws_lexv2models_bot_locale.english_locale,
-#     aws_lexv2models_slot_type.transaction_count_type,
-#     aws_lexv2models_slot.number_of_transactions,
-#     aws_lexv2models_intent.greeting_intent,
-#     aws_lexv2models_intent.get_recent_transactions,
-#     aws_lexv2models_intent.goodbye_intent,
-#     null_resource.update_intent_slot_priority 
-#   ]
-# }
 
 resource "null_resource" "create_lex_alias" {
   triggers = {
@@ -739,6 +554,53 @@ resource "null_resource" "create_lex_alias" {
   ]
 }
 
+# resource "null_resource" "attach_lambda_hook" {
+#   triggers = {
+#     bot_id     = aws_lexv2models_bot.finance_assistant.id
+#     lambda_arn = aws_lambda_function.query_lex_handler.arn
+#   }
+
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       set -ex
+
+#       ALIAS_ID=$(aws lexv2-models list-bot-aliases \
+#         --bot-id ${self.triggers.bot_id} \
+#         --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botAliasId" \
+#         --output text)
+
+#       VERSION=$(aws lexv2-models list-bot-aliases \
+#         --bot-id ${self.triggers.bot_id} \
+#         --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botVersion" \
+#         --output text)
+
+#       aws lexv2-models update-bot-alias \
+#         --bot-id ${self.triggers.bot_id} \
+#         --bot-alias-id "$ALIAS_ID" \
+#         --bot-alias-name "financeAssistantAlias" \
+#         --bot-version "$VERSION" \
+#         --bot-alias-locale-settings '{
+#           "en_US": {
+#             "enabled": true,
+#             "codeHookSpecification": {
+#               "lambdaCodeHook": {
+#                 "lambdaARN": "${self.triggers.lambda_arn}",
+#                 "codeHookInterfaceVersion": "1.0"
+#               }
+#             }
+#           }
+#         }'
+
+#       echo "✅ Attached Lambda to Lex alias locale"
+#     EOT
+#     interpreter = ["bash", "-c"]
+#   }
+
+#   depends_on = [
+#     null_resource.create_lex_alias,
+#     aws_lambda_function.query_lex_handler
+#   ]
+# }
 resource "null_resource" "attach_lambda_hook" {
   triggers = {
     bot_id     = aws_lexv2models_bot.finance_assistant.id
@@ -759,6 +621,7 @@ resource "null_resource" "attach_lambda_hook" {
         --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botVersion" \
         --output text)
 
+      # Attach Lambda to the bot alias
       aws lexv2-models update-bot-alias \
         --bot-id ${self.triggers.bot_id} \
         --bot-alias-id "$ALIAS_ID" \
@@ -777,6 +640,113 @@ resource "null_resource" "attach_lambda_hook" {
         }'
 
       echo "✅ Attached Lambda to Lex alias locale"
+
+      # Now ensure all intents have fulfillment code hooks enabled
+      INTENTS_TO_UPDATE=("TransactionSearch" "GetSpendingByCategory" "MonthlySummary")
+      
+      for INTENT_NAME in "$${INTENTS_TO_UPDATE[@]}"; do
+        echo "Updating fulfillment hook for $INTENT_NAME"
+        
+        INTENT_ID=$(aws lexv2-models list-intents \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --query "intentSummaries[?intentName=='$INTENT_NAME'].intentId" \
+          --output text)
+          
+        if [[ ! -z "$INTENT_ID" ]]; then
+          # Get the intent config
+          aws lexv2-models describe-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $INTENT_ID > intent_config.json
+            
+          # Strip metadata
+          jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
+            intent_config.json > clean_intent.json
+            
+          # Ensure fulfillment hook is enabled
+          jq '.fulfillmentCodeHook = {"enabled": true}' clean_intent.json > updated_intent.json
+            
+          # Update the intent
+          aws lexv2-models update-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $INTENT_ID \
+            --cli-input-json file://updated_intent.json
+            
+          echo "✅ Fulfillment hook enabled for $INTENT_NAME"
+        else
+          echo "⚠️ Intent $INTENT_NAME not found"
+        fi
+      done
+      
+      # Rebuild the bot after updating intents
+      echo "Rebuilding bot after enabling fulfillment hooks..."
+      aws lexv2-models build-bot-locale \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US
+        
+      # Wait for build to complete
+      echo "🕒 Waiting for locale build to finish..."
+      for i in {1..60}; do
+        STATUS=$(aws lexv2-models describe-bot-locale \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --query 'botLocaleStatus' \
+          --output text)
+          
+        echo "⏳ Current locale status: $STATUS"
+        
+        if [[ "$STATUS" == "Built" ]]; then
+          echo "✅ Locale build complete."
+          break
+        elif [[ "$STATUS" == "Failed" ]]; then
+          echo "❌ Locale build failed. Fetching failure reasons..."
+          aws lexv2-models describe-bot-locale \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --query 'failureReasons' \
+            --output text
+          exit 1
+        fi
+        
+        sleep 5
+      done
+      
+      # Create a new version from the updated DRAFT
+      NEW_VERSION=$(aws lexv2-models create-bot-version \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version-locale-specification '{"en_US":{"sourceBotVersion":"DRAFT"}}' \
+        --query 'botVersion' \
+        --output text)
+        
+      echo "✅ Published updated Lex bot version: $NEW_VERSION"
+      
+      # Update the alias to point to the new version
+      aws lexv2-models update-bot-alias \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-alias-id "$ALIAS_ID" \
+        --bot-alias-name "financeAssistantAlias" \
+        --bot-version "$NEW_VERSION" \
+        --bot-alias-locale-settings '{
+          "en_US": {
+            "enabled": true,
+            "codeHookSpecification": {
+              "lambdaCodeHook": {
+                "lambdaARN": "${self.triggers.lambda_arn}",
+                "codeHookInterfaceVersion": "1.0"
+              }
+            }
+          }
+        }'
+        
+      echo "✅ Updated alias to point to version with fulfillment hooks enabled"
     EOT
     interpreter = ["bash", "-c"]
   }
