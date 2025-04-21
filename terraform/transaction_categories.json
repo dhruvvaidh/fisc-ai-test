@@ -1,0 +1,938 @@
+[
+  {
+    "sampleValue": {
+      "value": "INCOME_DIVIDENDS"
+    },
+    "synonyms": [
+      "dividends",
+      "income dividends"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_INTEREST_EARNED"
+    },
+    "synonyms": [
+      "income interest earned",
+      "interest earned"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_RETIREMENT_PENSION"
+    },
+    "synonyms": [
+      "income retirement pension",
+      "retirement pension"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_TAX_REFUND"
+    },
+    "synonyms": [
+      "income tax refund",
+      "tax refund"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_UNEMPLOYMENT"
+    },
+    "synonyms": [
+      "unemployment",
+      "income unemployment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_WAGES"
+    },
+    "synonyms": [
+      "income wages",
+      "wages"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "INCOME_OTHER_INCOME"
+    },
+    "synonyms": [
+      "income other income",
+      "other income"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_CASH_ADVANCES_AND_LOANS"
+    },
+    "synonyms": [
+      "in cash advances and loans",
+      "transfer in cash advances and loans"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_DEPOSIT"
+    },
+    "synonyms": [
+      "transfer in deposit",
+      "in deposit"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_INVESTMENT_AND_RETIREMENT_FUNDS"
+    },
+    "synonyms": [
+      "in investment and retirement funds",
+      "transfer in investment and retirement funds"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_SAVINGS"
+    },
+    "synonyms": [
+      "in savings",
+      "transfer in savings"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_ACCOUNT_TRANSFER"
+    },
+    "synonyms": [
+      "in account transfer",
+      "transfer in account transfer"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_IN_OTHER_TRANSFER_IN"
+    },
+    "synonyms": [
+      "transfer in other transfer in",
+      "in other transfer in"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_OUT_INVESTMENT_AND_RETIREMENT_FUNDS"
+    },
+    "synonyms": [
+      "transfer out investment and retirement funds",
+      "out investment and retirement funds"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_OUT_SAVINGS"
+    },
+    "synonyms": [
+      "out savings",
+      "transfer out savings"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_OUT_WITHDRAWAL"
+    },
+    "synonyms": [
+      "out withdrawal",
+      "transfer out withdrawal"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_OUT_ACCOUNT_TRANSFER"
+    },
+    "synonyms": [
+      "transfer out account transfer",
+      "out account transfer"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSFER_OUT_OTHER_TRANSFER_OUT"
+    },
+    "synonyms": [
+      "transfer out other transfer out",
+      "out other transfer out"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_CAR_PAYMENT"
+    },
+    "synonyms": [
+      "loan payments car payment",
+      "payments car payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_CREDIT_CARD_PAYMENT"
+    },
+    "synonyms": [
+      "loan payments credit card payment",
+      "payments credit card payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_PERSONAL_LOAN_PAYMENT"
+    },
+    "synonyms": [
+      "payments personal loan payment",
+      "loan payments personal loan payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_MORTGAGE_PAYMENT"
+    },
+    "synonyms": [
+      "payments mortgage payment",
+      "loan payments mortgage payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_STUDENT_LOAN_PAYMENT"
+    },
+    "synonyms": [
+      "payments student loan payment",
+      "loan payments student loan payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "LOAN_PAYMENTS_OTHER_PAYMENT"
+    },
+    "synonyms": [
+      "loan payments other payment",
+      "payments other payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_ATM_FEES"
+    },
+    "synonyms": [
+      "bank fees atm fees",
+      "fees atm fees"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_FOREIGN_TRANSACTION_FEES"
+    },
+    "synonyms": [
+      "bank fees foreign transaction fees",
+      "fees foreign transaction fees"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_INSUFFICIENT_FUNDS"
+    },
+    "synonyms": [
+      "bank fees insufficient funds",
+      "fees insufficient funds"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_INTEREST_CHARGE"
+    },
+    "synonyms": [
+      "bank fees interest charge",
+      "fees interest charge"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_OVERDRAFT_FEES"
+    },
+    "synonyms": [
+      "bank fees overdraft fees",
+      "fees overdraft fees"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "BANK_FEES_OTHER_BANK_FEES"
+    },
+    "synonyms": [
+      "bank fees other bank fees",
+      "fees other bank fees"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_CASINOS_AND_GAMBLING"
+    },
+    "synonyms": [
+      "casinos and gambling",
+      "entertainment casinos and gambling"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_MUSIC_AND_AUDIO"
+    },
+    "synonyms": [
+      "entertainment music and audio",
+      "music and audio"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_SPORTING_EVENTS_AMUSEMENT_PARKS_AND_MUSEUMS"
+    },
+    "synonyms": [
+      "entertainment sporting events amusement parks and museums",
+      "sporting events amusement parks and museums"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_TV_AND_MOVIES"
+    },
+    "synonyms": [
+      "entertainment tv and movies",
+      "tv and movies"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_VIDEO_GAMES"
+    },
+    "synonyms": [
+      "video games",
+      "entertainment video games"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "ENTERTAINMENT_OTHER_ENTERTAINMENT"
+    },
+    "synonyms": [
+      "entertainment other entertainment",
+      "other entertainment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_BEER_WINE_AND_LIQUOR"
+    },
+    "synonyms": [
+      "food and drink beer wine and liquor",
+      "and drink beer wine and liquor"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_COFFEE"
+    },
+    "synonyms": [
+      "and drink coffee",
+      "food and drink coffee"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_FAST_FOOD"
+    },
+    "synonyms": [
+      "and drink fast food",
+      "food and drink fast food"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_GROCERIES"
+    },
+    "synonyms": [
+      "food and drink groceries",
+      "and drink groceries"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_RESTAURANT"
+    },
+    "synonyms": [
+      "food and drink restaurant",
+      "and drink restaurant"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_VENDING_MACHINES"
+    },
+    "synonyms": [
+      "and drink vending machines",
+      "food and drink vending machines"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "FOOD_AND_DRINK_OTHER_FOOD_AND_DRINK"
+    },
+    "synonyms": [
+      "food and drink other food and drink",
+      "and drink other food and drink"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_BOOKSTORES_AND_NEWSSTANDS"
+    },
+    "synonyms": [
+      "merchandise bookstores and newsstands",
+      "general merchandise bookstores and newsstands"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_CLOTHING_AND_ACCESSORIES"
+    },
+    "synonyms": [
+      "general merchandise clothing and accessories",
+      "merchandise clothing and accessories"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_CONVENIENCE_STORES"
+    },
+    "synonyms": [
+      "general merchandise convenience stores",
+      "merchandise convenience stores"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_DEPARTMENT_STORES"
+    },
+    "synonyms": [
+      "general merchandise department stores",
+      "merchandise department stores"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_DISCOUNT_STORES"
+    },
+    "synonyms": [
+      "merchandise discount stores",
+      "general merchandise discount stores"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_ELECTRONICS"
+    },
+    "synonyms": [
+      "merchandise electronics",
+      "general merchandise electronics"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_GIFTS_AND_NOVELTIES"
+    },
+    "synonyms": [
+      "merchandise gifts and novelties",
+      "general merchandise gifts and novelties"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_OFFICE_SUPPLIES"
+    },
+    "synonyms": [
+      "merchandise office supplies",
+      "general merchandise office supplies"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_ONLINE_MARKETPLACES"
+    },
+    "synonyms": [
+      "general merchandise online marketplaces",
+      "merchandise online marketplaces"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_PET_SUPPLIES"
+    },
+    "synonyms": [
+      "general merchandise pet supplies",
+      "merchandise pet supplies"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_SPORTING_GOODS"
+    },
+    "synonyms": [
+      "merchandise sporting goods",
+      "general merchandise sporting goods"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_SUPERSTORES"
+    },
+    "synonyms": [
+      "merchandise superstores",
+      "general merchandise superstores"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_TOBACCO_AND_VAPE"
+    },
+    "synonyms": [
+      "merchandise tobacco and vape",
+      "general merchandise tobacco and vape"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_MERCHANDISE_OTHER_GENERAL_MERCHANDISE"
+    },
+    "synonyms": [
+      "merchandise other general merchandise",
+      "general merchandise other general merchandise"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "HOME_IMPROVEMENT_FURNITURE"
+    },
+    "synonyms": [
+      "improvement furniture",
+      "home improvement furniture"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "HOME_IMPROVEMENT_HARDWARE"
+    },
+    "synonyms": [
+      "improvement hardware",
+      "home improvement hardware"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "HOME_IMPROVEMENT_REPAIR_AND_MAINTENANCE"
+    },
+    "synonyms": [
+      "improvement repair and maintenance",
+      "home improvement repair and maintenance"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "HOME_IMPROVEMENT_SECURITY"
+    },
+    "synonyms": [
+      "improvement security",
+      "home improvement security"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "HOME_IMPROVEMENT_OTHER_HOME_IMPROVEMENT"
+    },
+    "synonyms": [
+      "improvement other home improvement",
+      "home improvement other home improvement"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_DENTAL_CARE"
+    },
+    "synonyms": [
+      "dental care",
+      "medical dental care"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_EYE_CARE"
+    },
+    "synonyms": [
+      "eye care",
+      "medical eye care"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_NURSING_CARE"
+    },
+    "synonyms": [
+      "medical nursing care",
+      "nursing care"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_PHARMACIES_AND_SUPPLEMENTS"
+    },
+    "synonyms": [
+      "pharmacies and supplements",
+      "medical pharmacies and supplements"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_PRIMARY_CARE"
+    },
+    "synonyms": [
+      "medical primary care",
+      "primary care"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_VETERINARY_SERVICES"
+    },
+    "synonyms": [
+      "veterinary services",
+      "medical veterinary services"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "MEDICAL_OTHER_MEDICAL"
+    },
+    "synonyms": [
+      "other medical",
+      "medical other medical"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "PERSONAL_CARE_GYMS_AND_FITNESS_CENTERS"
+    },
+    "synonyms": [
+      "personal care gyms and fitness centers",
+      "care gyms and fitness centers"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "PERSONAL_CARE_HAIR_AND_BEAUTY"
+    },
+    "synonyms": [
+      "personal care hair and beauty",
+      "care hair and beauty"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "PERSONAL_CARE_LAUNDRY_AND_DRY_CLEANING"
+    },
+    "synonyms": [
+      "personal care laundry and dry cleaning",
+      "care laundry and dry cleaning"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "PERSONAL_CARE_OTHER_PERSONAL_CARE"
+    },
+    "synonyms": [
+      "care other personal care",
+      "personal care other personal care"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_ACCOUNTING_AND_FINANCIAL_PLANNING"
+    },
+    "synonyms": [
+      "general services accounting and financial planning",
+      "services accounting and financial planning"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_AUTOMOTIVE"
+    },
+    "synonyms": [
+      "general services automotive",
+      "services automotive"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_CHILDCARE"
+    },
+    "synonyms": [
+      "general services childcare",
+      "services childcare"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_CONSULTING_AND_LEGAL"
+    },
+    "synonyms": [
+      "general services consulting and legal",
+      "services consulting and legal"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_EDUCATION"
+    },
+    "synonyms": [
+      "services education",
+      "general services education"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_INSURANCE"
+    },
+    "synonyms": [
+      "services insurance",
+      "general services insurance"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_POSTAGE_AND_SHIPPING"
+    },
+    "synonyms": [
+      "services postage and shipping",
+      "general services postage and shipping"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_STORAGE"
+    },
+    "synonyms": [
+      "general services storage",
+      "services storage"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GENERAL_SERVICES_OTHER_GENERAL_SERVICES"
+    },
+    "synonyms": [
+      "general services other general services",
+      "services other general services"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GOVERNMENT_AND_NON_PROFIT_DONATIONS"
+    },
+    "synonyms": [
+      "government and non profit donations",
+      "and non profit donations"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GOVERNMENT_AND_NON_PROFIT_GOVERNMENT_DEPARTMENTS_AND_AGENCIES"
+    },
+    "synonyms": [
+      "and non profit government departments and agencies",
+      "government and non profit government departments and agencies"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GOVERNMENT_AND_NON_PROFIT_TAX_PAYMENT"
+    },
+    "synonyms": [
+      "and non profit tax payment",
+      "government and non profit tax payment"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "GOVERNMENT_AND_NON_PROFIT_OTHER_GOVERNMENT_AND_NON_PROFIT"
+    },
+    "synonyms": [
+      "government and non profit other government and non profit",
+      "and non profit other government and non profit"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_BIKES_AND_SCOOTERS"
+    },
+    "synonyms": [
+      "bikes and scooters",
+      "transportation bikes and scooters"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_GAS"
+    },
+    "synonyms": [
+      "transportation gas",
+      "gas"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_PARKING"
+    },
+    "synonyms": [
+      "parking",
+      "transportation parking"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_PUBLIC_TRANSIT"
+    },
+    "synonyms": [
+      "transportation public transit",
+      "public transit"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_TAXIS_AND_RIDE_SHARES"
+    },
+    "synonyms": [
+      "taxis and ride shares",
+      "transportation taxis and ride shares"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_TOLLS"
+    },
+    "synonyms": [
+      "tolls",
+      "transportation tolls"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRANSPORTATION_OTHER_TRANSPORTATION"
+    },
+    "synonyms": [
+      "transportation other transportation",
+      "other transportation"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRAVEL_FLIGHTS"
+    },
+    "synonyms": [
+      "travel flights",
+      "flights"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRAVEL_LODGING"
+    },
+    "synonyms": [
+      "travel lodging",
+      "lodging"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRAVEL_RENTAL_CARS"
+    },
+    "synonyms": [
+      "rental cars",
+      "travel rental cars"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "TRAVEL_OTHER_TRAVEL"
+    },
+    "synonyms": [
+      "travel other travel",
+      "other travel"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_GAS_AND_ELECTRICITY"
+    },
+    "synonyms": [
+      "rent and utilities gas and electricity",
+      "and utilities gas and electricity"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_INTERNET_AND_CABLE"
+    },
+    "synonyms": [
+      "rent and utilities internet and cable",
+      "and utilities internet and cable"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_RENT"
+    },
+    "synonyms": [
+      "rent and utilities rent",
+      "and utilities rent"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_SEWAGE_AND_WASTE_MANAGEMENT"
+    },
+    "synonyms": [
+      "and utilities sewage and waste management",
+      "rent and utilities sewage and waste management"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_TELEPHONE"
+    },
+    "synonyms": [
+      "and utilities telephone",
+      "rent and utilities telephone"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_WATER"
+    },
+    "synonyms": [
+      "rent and utilities water",
+      "and utilities water"
+    ]
+  },
+  {
+    "sampleValue": {
+      "value": "RENT_AND_UTILITIES_OTHER_UTILITIES"
+    },
+    "synonyms": [
+      "and utilities other utilities",
+      "rent and utilities other utilities"
+    ]
+  }
+]

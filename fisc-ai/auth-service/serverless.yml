@@ -1,0 +1,23 @@
+service: fiscai-auth
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  environment:
+    COGNITO_USER_POOL_ID: ${ssm:/fiscai/cognito/user-pool-id}
+    COGNITO_CLIENT_ID: ${ssm:/fiscai/cognito/client-id}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cognito-idp:InitiateAuth
+        - cognito-idp:GetUser
+      Resource: arn:aws:cognito-idp:${aws:region}:${aws:accountId}:userpool/${self:provider.environment.COGNITO_USER_POOL_ID}
+
+functions:
+  auth:
+    handler: handler.auth
+    events:
+      - http:
+          path: /api/auth/{proxy+}
+          method: ANY
+          cors: true 

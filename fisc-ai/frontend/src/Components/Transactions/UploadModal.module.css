@@ -1,0 +1,232 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #000;
+  transform: rotate(90deg);
+}
+
+.uploadSection {
+  margin-top: 24px;
+}
+
+.uploadArea {
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.uploadArea:hover {
+  border-color: #000;
+  background: #f8f8f8;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.uploadIcon {
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.uploadArea:hover .uploadIcon {
+  color: #000;
+}
+
+.uploadText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.primaryText {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.secondaryText {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.supportedFormats {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 8px;
+}
+
+/* Status Styles */
+.statusContainer {
+  padding: 24px;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepNumber {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.stepLabel {
+  font-size: 0.75rem;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.step.completed .stepNumber {
+  background: #000;
+  border-color: #000;
+  color: white;
+}
+
+.step.completed .stepLabel {
+  color: #000;
+}
+
+.step.current .stepNumber {
+  border-color: #000;
+  color: #000;
+}
+
+.step.current .stepLabel {
+  color: #000;
+  font-weight: 500;
+}
+
+.statusMessage {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.statusText {
+  font-size: 1rem;
+  color: #000;
+  font-weight: 500;
+}
+
+.loadingSpinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e0e0e0;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 24px;
+    width: 95%;
+  }
+
+  .steps {
+    margin-bottom: 32px;
+  }
+
+  .stepLabel {
+    font-size: 0.7rem;
+  }
+
+  .stepNumber {
+    width: 28px;
+    height: 28px;
+  }
+}

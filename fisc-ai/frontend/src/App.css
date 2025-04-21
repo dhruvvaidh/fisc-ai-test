@@ -1,0 +1,174 @@
+/* Amplify Authenticator Styles */
+[data-amplify-authenticator] {
+  --amplify-components-authenticator-router-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --amplify-components-authenticator-router-border-width: 0;
+  --amplify-components-authenticator-form-padding: 2rem;
+  --amplify-components-button-primary-background-color: #000000;
+  --amplify-components-button-primary-hover-background-color: #333333;
+  --amplify-components-button-primary-active-background-color: #1a1a1a;
+  --amplify-components-button-primary-color: white;
+  --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  --amplify-components-fieldcontrol-border-color: #e0e0e0;
+  --amplify-components-fieldcontrol-focus-border-color: #000000;
+  --amplify-components-tabs-item-active-border-color: #000000;
+  --amplify-components-tabs-item-color: #666666;
+  --amplify-components-tabs-item-active-color: #000000;
+  --amplify-components-button-link-color: #000000;
+  --amplify-components-heading-color: #000000;
+  --amplify-components-text-color: #666666;
+}
+
+:root {
+  --primary-color: #000000;
+  --primary-hover: #333333;
+  --background-color: #ffffff;
+  --background-secondary: #f8f8f8;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.2s;
+}
+
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--background-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  transition: margin-left var(--transition-speed);
+}
+
+.top-header {
+  background-color: var(--background-color);
+  padding: 1.25rem 2.5rem;
+  box-shadow: var(--card-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-content h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.dashboard-content {
+  padding: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.signin-button {
+  background-color: var(--text-primary);
+  color: var(--background-color);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signin-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.page-container {
+  padding: 2rem;
+  background-color: var(--background-color);
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.page-container h1 {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.transactions-container {
+  padding: 2rem;
+  background-color: var(--background-color);
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-speed);
+  border: 1px solid var(--border-color);
+}
+
+.transactions-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .dashboard-content {
+    padding: 1.5rem;
+  }
+  
+  .header-content {
+    padding: 0 1.5rem;
+  }
+}
+
+.sidebar-item {
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.sidebar-item:hover {
+  background-color: var(--background-secondary);
+}
+
+.sidebar-item.active {
+  background-color: var(--background-secondary);
+  font-weight: 500;
+} 

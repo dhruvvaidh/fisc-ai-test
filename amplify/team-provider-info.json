@@ -1,0 +1,24 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fiscai-dev-0b55b-authRole",
+      "UnauthRoleArn": "arn:aws:iam::418272788390:role/amplify-fiscai-dev-0b55b-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::418272788390:role/amplify-fiscai-dev-0b55b-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-fiscai-dev-0b55b-deployment",
+      "UnauthRoleName": "amplify-fiscai-dev-0b55b-unauthRole",
+      "StackName": "amplify-fiscai-dev-0b55b",
+      "StackId": "arn:aws:cloudformation:us-east-1:418272788390:stack/amplify-fiscai-dev-0b55b/45f27a10-f5fb-11ef-a0b1-0afff2524fbf",
+      "AmplifyAppId": "d1casg8ohmhwgc"
+    },
+    "categories": {
+      "function": {
+        "testLambda": {},
+        "testFunction": {}
+      },
+      "auth": {
+        "fiscai2f0ae83f": {}
+      }
+    }
+  }
+}

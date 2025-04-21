@@ -1,0 +1,410 @@
+/* Main container */
+.transactions-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  margin: 20px 0;
+}
+
+/* Header styling */
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.transaction-count {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Button styles */
+.upload-receipt-button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.upload-receipt-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-button {
+  padding: 10px;
+  background: #f8f8f8;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.refresh-button:hover {
+  background: #f0f0f0;
+}
+
+/* Table styles */
+.transactions-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.table-header {
+  text-align: left;
+  color: #666;
+  font-weight: 500;
+  padding: 12px 16px;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.transaction-row {
+  transition: all 0.2s ease;
+}
+
+.transaction-row:hover {
+  background-color: #f8f8f8;
+  transform: translateX(4px);
+}
+
+.transaction-cell {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Transaction details */
+.merchant-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.merchant-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f8f8f8;
+}
+
+.merchant-name {
+  font-weight: 500;
+}
+
+.amount {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.amount.positive {
+  color: #10B981;
+}
+
+.amount.negative {
+  color: #EF4444;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  background: #FEF3C7;
+  color: #D97706;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-header {
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Upload section */
+.upload-section {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.file-input-container {
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-input-container:hover {
+  border-color: #000;
+  background: #f8f8f8;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Modal actions */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-button.primary {
+  background: #000;
+  color: white;
+  border: none;
+}
+
+.modal-button.secondary {
+  background: white;
+  color: #000;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Notification */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.notification.success {
+  background-color: #10B981;
+}
+
+.notification.error {
+  background-color: #EF4444;
+}
+
+/* Loading animation */
+.spinning {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Add these styles to your existing Transactions.module.css */
+.transactions-tabs {
+  margin: 1rem 0;
+  position: relative;
+}
+
+.tab-buttons-container {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  position: relative;
+  transition: all var(--transition-speed);
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+}
+
+.tab-icon {
+  font-size: 1.25rem;
+}
+
+.tab-label {
+  white-space: nowrap;
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+/* Update existing styles */
+.transactions-container {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-header {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.action-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-button:hover {
+  background: var(--hover-color);
+  transform: translateY(-1px);
+}
+
+.action-button.primary {
+  background: black;
+  color: white;
+  border: none;
+}
+
+.action-button.primary:hover {
+  background: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.button-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Add these CSS variables at the top of your file */
+:root {
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --hover-color: #f5f5f5;
+} 
