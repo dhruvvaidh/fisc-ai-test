@@ -368,7 +368,187 @@ resource "null_resource" "create_lex_alias" {
     command = <<EOT
       set -xe
 
-      # First, verify the slot priority is set correctly
+      # --- TRANSACTION SEARCH INTENT SLOT PRIORITIES ---
+      echo "Setting TransactionSearch slot priorities..."
+      TRANSACTION_SEARCH_ID=$(aws lexv2-models list-intents \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --query "intentSummaries[?intentName=='TransactionSearch'].intentId" \
+        --output text)
+        
+      if [[ ! -z "$TRANSACTION_SEARCH_ID" ]]; then
+        # Get slot IDs
+        MERCHANT_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $TRANSACTION_SEARCH_ID \
+          --query "slotSummaries[?slotName=='Merchant'].slotId" \
+          --output text)
+          
+        MIN_AMOUNT_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $TRANSACTION_SEARCH_ID \
+          --query "slotSummaries[?slotName=='MinAmount'].slotId" \
+          --output text)
+          
+        if [[ ! -z "$MERCHANT_SLOT_ID" && ! -z "$MIN_AMOUNT_SLOT_ID" ]]; then
+          # Get intent config
+          aws lexv2-models describe-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $TRANSACTION_SEARCH_ID > transaction_intent.json
+            
+          # Strip metadata and name
+          jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
+            transaction_intent.json > clean_transaction_intent.json
+            
+          # Add priorities
+          jq --arg m "$MERCHANT_SLOT_ID" --arg a "$MIN_AMOUNT_SLOT_ID" \
+            '.slotPriorities = [{"priority": 1, "slotId": $m}, {"priority": 2, "slotId": $a}]' \
+            clean_transaction_intent.json > updated_transaction_intent.json
+            
+          # Update intent
+          aws lexv2-models update-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $TRANSACTION_SEARCH_ID \
+            --cli-input-json file://updated_transaction_intent.json
+            
+          echo "✅ TransactionSearch slot priorities set"
+        else
+          echo "⚠️ Couldn't find slot IDs for TransactionSearch"
+        fi
+      else
+        echo "⚠️ TransactionSearch intent not found"
+      fi
+      
+      # --- GET SPENDING BY CATEGORY INTENT SLOT PRIORITIES ---
+      echo "Setting GetSpendingByCategory slot priorities..."
+      GET_SPENDING_ID=$(aws lexv2-models list-intents \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --query "intentSummaries[?intentName=='GetSpendingByCategory'].intentId" \
+        --output text)
+        
+      if [[ ! -z "$GET_SPENDING_ID" ]]; then
+        # Get slot IDs
+        CATEGORY_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $GET_SPENDING_ID \
+          --query "slotSummaries[?slotName=='Category'].slotId" \
+          --output text)
+          
+        TIME_PERIOD_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $GET_SPENDING_ID \
+          --query "slotSummaries[?slotName=='TimePeriod'].slotId" \
+          --output text)
+          
+        if [[ ! -z "$CATEGORY_SLOT_ID" && ! -z "$TIME_PERIOD_SLOT_ID" ]]; then
+          # Get intent config
+          aws lexv2-models describe-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $GET_SPENDING_ID > spending_intent.json
+            
+          # Strip metadata and name
+          jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
+            spending_intent.json > clean_spending_intent.json
+            
+          # Add priorities
+          jq --arg c "$CATEGORY_SLOT_ID" --arg t "$TIME_PERIOD_SLOT_ID" \
+            '.slotPriorities = [{"priority": 1, "slotId": $c}, {"priority": 2, "slotId": $t}]' \
+            clean_spending_intent.json > updated_spending_intent.json
+            
+          # Update intent
+          aws lexv2-models update-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $GET_SPENDING_ID \
+            --cli-input-json file://updated_spending_intent.json
+            
+          echo "✅ GetSpendingByCategory slot priorities set"
+        else
+          echo "⚠️ Couldn't find slot IDs for GetSpendingByCategory"
+        fi
+      else
+        echo "⚠️ GetSpendingByCategory intent not found"
+      fi
+      
+      # --- MONTHLY SUMMARY INTENT SLOT PRIORITIES ---
+      echo "Setting MonthlySummary slot priorities..."
+      MONTHLY_SUMMARY_ID=$(aws lexv2-models list-intents \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --query "intentSummaries[?intentName=='MonthlySummary'].intentId" \
+        --output text)
+        
+      if [[ ! -z "$MONTHLY_SUMMARY_ID" ]]; then
+        # Get slot IDs
+        MONTH_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $MONTHLY_SUMMARY_ID \
+          --query "slotSummaries[?slotName=='Month'].slotId" \
+          --output text)
+          
+        YEAR_SLOT_ID=$(aws lexv2-models list-slots \
+          --bot-id ${self.triggers.bot_id} \
+          --bot-version DRAFT \
+          --locale-id en_US \
+          --intent-id $MONTHLY_SUMMARY_ID \
+          --query "slotSummaries[?slotName=='Year'].slotId" \
+          --output text)
+          
+        if [[ ! -z "$MONTH_SLOT_ID" && ! -z "$YEAR_SLOT_ID" ]]; then
+          # Get intent config
+          aws lexv2-models describe-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $MONTHLY_SUMMARY_ID > monthly_intent.json
+            
+          # Strip metadata and name
+          jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
+            monthly_intent.json > clean_monthly_intent.json
+            
+          # Add priorities
+          jq --arg m "$MONTH_SLOT_ID" --arg y "$YEAR_SLOT_ID" \
+            '.slotPriorities = [{"priority": 1, "slotId": $m}, {"priority": 2, "slotId": $y}]' \
+            clean_monthly_intent.json > updated_monthly_intent.json
+            
+          # Update intent
+          aws lexv2-models update-intent \
+            --bot-id ${self.triggers.bot_id} \
+            --bot-version DRAFT \
+            --locale-id en_US \
+            --intent-id $MONTHLY_SUMMARY_ID \
+            --cli-input-json file://updated_monthly_intent.json
+            
+          echo "✅ MonthlySummary slot priorities set"
+        else
+          echo "⚠️ Couldn't find slot IDs for MonthlySummary"
+        fi
+      else
+        echo "⚠️ MonthlySummary intent not found"
+      fi
+
+      # First, verify GetRecentTransactions intent priority (original code)
       echo "Verifying slot priorities are properly set..."
       TRANSACTIONS_INTENT_ID=$(aws lexv2-models list-intents \
         --bot-id ${self.triggers.bot_id} \
@@ -399,7 +579,7 @@ resource "null_resource" "create_lex_alias" {
             
           if [[ ! -z "$SLOT_ID" ]]; then
             # Create a temporary file with the intent configuration
-            echo "$INTENT_INFO" | jq 'del(.creationDateTime, .lastUpdatedDateTime, .version)' > temp_intent.json
+            echo "$INTENT_INFO" | jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' > temp_intent.json
             
             # Add slot priority
             jq --arg slot_id "$SLOT_ID" '.slotPriorities = [{"priority": 1, "slotId": $slot_id}]' temp_intent.json > updated_intent.json
@@ -423,13 +603,13 @@ resource "null_resource" "create_lex_alias" {
         echo "⚠️ GetRecentTransactions intent not found!"
       fi
 
-
       # Step 1: Build the DRAFT locale (if not already built)
       aws lexv2-models build-bot-locale \
         --bot-id ${self.triggers.bot_id} \
         --bot-version DRAFT \
         --locale-id en_US
 
+      # The rest of your existing code (waiting for build, creating version, etc.)...
       # Wait for build to complete
       echo "🕒 Waiting for locale build to finish..."
       for i in {1..60}; do
@@ -546,19 +726,16 @@ resource "null_resource" "create_lex_alias" {
     aws_lexv2models_slot.category_slot,
     aws_lexv2models_slot.time_period_slot,
     aws_lexv2models_intent.get_spending_by_category,
-    null_resource.update_get_spending_by_category_slot_priorities,
  
     # TransactionSearch intent and slots
     aws_lexv2models_slot.merchant_slot,
     aws_lexv2models_intent.transaction_search,
     aws_lexv2models_slot.min_amount_slot,
-    null_resource.update_transaction_search_slot_priority,
  
     # MonthlySummary intent and slots
     aws_lexv2models_slot.month_slot,
     aws_lexv2models_intent.monthly_summary,
     aws_lexv2models_slot.year_slot,
-    null_resource.update_monthly_summary_slot_priority,
   ]
 }
 
