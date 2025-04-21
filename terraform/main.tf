@@ -49,7 +49,7 @@ resource "aws_iam_policy_attachment" "amplify_full_access" {
 # Amplify App
 resource "aws_amplify_app" "plaid_app" {
   name         = "FiscAI"
-  repository   = "https://github.com/dhruvvaidh/FiscAI"
+  repository   = var.repo_url
   oauth_token  = var.github_token
   platform     = "WEB"
   iam_service_role_arn = aws_iam_role.amplify_role.arn
@@ -166,7 +166,7 @@ resource "aws_dynamodb_table" "accounts" {
 
 # S3 bucket policy
 resource "aws_s3_bucket" "receipt_bucket" {
-  bucket        = "leo-receipt"
+  bucket        = "receipt-${var.aws_account_id}" 
   force_destroy = true
 }
 
