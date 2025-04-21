@@ -555,17 +555,27 @@ resource "null_resource" "update_transaction_search_slot_priority" {
         --locale-id en_US \
         --intent-id ${self.triggers.intent_id} \
         --output json > intent_config.json
+      
+      # Remove fields that cause issues
       jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
-      intent_config.json > tmp_intent_config.json && mv tmp_intent_config.json intent_config.json
+        intent_config.json > clean_intent.json
+      
+      # Verify name is removed
+      if jq -e 'has("name")' clean_intent.json; then
+        echo "WARNING: name field still present, removing explicitly"
+        jq 'del(.name)' clean_intent.json > final_intent.json
+      else
+        cp clean_intent.json final_intent.json
+      fi
 
-      # Inject our two slot priorities
+      # Inject our slot priorities
       jq --arg m "${self.triggers.merchant_slot_id}" \
          --arg n "${self.triggers.min_amount_slot_id}" \
          '.slotPriorities = [
              {"priority":1,"slotId": $m},
              {"priority":2,"slotId": $n}
            ]' \
-      intent_config.json > updated_intent.json
+        final_intent.json > updated_intent.json
 
       # Push it back
       aws lexv2-models update-intent \
