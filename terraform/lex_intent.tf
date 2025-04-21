@@ -100,7 +100,7 @@ resource "aws_lexv2models_intent" "transaction_search" {
   sample_utterance { utterance = "Search transactions at {Merchant} above {MinAmount} dollars" }
   sample_utterance { utterance = "Show me transactions for {Merchant} greater than {MinAmount}" }
   sample_utterance { utterance = "List all {Merchant} orders above {MinAmount}" }
-  sample_utterance { utterance = "What did I spend at {Merchant} over {MinAmount}?" }
+  sample_utterance { utterance = "What did I spend at {Merchant} over {MinAmount} ?" }
 
   fulfillment_code_hook {
     enabled = true
@@ -323,7 +323,7 @@ resource "aws_lexv2models_intent" "monthly_summary" {
   sample_utterance { utterance = "What did I spend in {Month} of {Year}" }
   sample_utterance { utterance = "My expenses for {Month} {Year}" }
   sample_utterance { utterance = "List expenses in {Month} {Year}" }
-  sample_utterance { utterance = "How much did I spend during {Month} {Year}?" }
+  sample_utterance { utterance = "How much did I spend during {Month} {Year} ?" }
 
   fulfillment_code_hook {
     enabled = true

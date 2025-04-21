@@ -18,7 +18,7 @@ resource "aws_lexv2models_intent" "get_spending_by_category" {
   sample_utterance { utterance = "What did I spend on {Category} in {TimePeriod}" }
   sample_utterance { utterance = "Give me my {Category} spending for {TimePeriod}" }
   sample_utterance { utterance = "My spending on {Category} {TimePeriod}" }
-  sample_utterance { utterance = "I spent how much on {Category} {TimePeriod}?" }
+  sample_utterance { utterance = "I spent how much on {Category} {TimePeriod} ?" }
 
   fulfillment_code_hook {
     enabled = true
