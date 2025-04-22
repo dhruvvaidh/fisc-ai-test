@@ -1,10 +1,11 @@
 
 
 data "external" "lex_alias_id" {
+  # Changed financeAssistantAlias to TestBotAlias in line 8
   program = ["bash", "-c", <<EOT
     ALIAS_ID=$(aws lexv2-models list-bot-aliases \
       --bot-id ${aws_lexv2models_bot.finance_assistant.id} \
-      --query "botAliasSummaries[?botAliasName=='financeAssistantAlias'].botAliasId | [0]" \
+      --query "botAliasSummaries[?botAliasName=='TestBotAlias'].botAliasId | [0]" \
       --output text)
 
     echo "{\"lex_bot_alias_id\": \"$ALIAS_ID\"}"
