@@ -120,6 +120,17 @@ resource "aws_lexv2models_intent" "transaction_search" {
     }
   }
 
+    # Define the order to elicit month then year
+    slot_priorities {
+      slot_id  = aws_lexv2models_slot.merchant_slot.slot_id
+      priority = 1
+    }
+    slot_priorities {
+      slot_id  = aws_lexv2models_slot.min_amount_slot.slot_id
+      priority = 2
+    }
+
+
   depends_on = [
     aws_lexv2models_bot_locale.english_locale
   ]
@@ -341,6 +352,16 @@ resource "aws_lexv2models_intent" "monthly_summary" {
       }
       allow_interrupt = true
     }
+  }
+
+  # Define the order to elicit month then year
+  slot_priorities {
+    slot_id  = aws_lexv2models_slot.month_slot.slot_id
+    priority = 1
+  }
+  slot_priorities {
+    slot_id  = aws_lexv2models_slot.year_slot.slot_id
+    priority = 2
   }
 
   depends_on = [
