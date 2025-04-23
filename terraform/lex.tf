@@ -80,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "query_lex_lambda_logs" {
 # lex lambda and permission
 resource "aws_lambda_function" "query_lex_handler" {
   function_name = "query_lex_handler"
-  filename      = "query_lex_v2.zip"          # replace with your zip file
+  filename      = "query_lex_v3.zip"          # replace with your zip file
   handler       = "query_lex.lambda_handler"
   runtime       = "python3.9"
   //role          = aws_iam_role.lambda_exec.arn
