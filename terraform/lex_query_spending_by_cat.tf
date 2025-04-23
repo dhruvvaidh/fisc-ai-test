@@ -988,7 +988,7 @@ resource "null_resource" "update_get_spending_by_category_slot_priorities" {
         --bot-version DRAFT \
         --locale-id $LOCALE \
         --intent-id $INTENT_ID | \
-        jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' > intent_config.json
+        jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, .intentName)' > intent_config.json
 
       echo "🛠️ Injecting slot priorities..."
       jq --arg cat "$SLOT_ID_CATEGORY" --arg tp "$SLOT_ID_TIMEPERIOD" \
