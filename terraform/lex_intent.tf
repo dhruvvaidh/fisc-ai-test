@@ -27,7 +27,7 @@ resource "aws_lexv2models_intent" "greeting_intent" {
       message_group {
         message {
           plain_text_message {
-            value = "Hi there, How can I help you?"
+            value = "what can i help you?"
           }
         }
       }
@@ -119,6 +119,16 @@ resource "aws_lexv2models_intent" "transaction_search" {
       allow_interrupt = true
     }
   }
+
+    # Define the order to elicit month then year
+    slot_priorities {
+      slot_id  = aws_lexv2models_slot.merchant_slot.slot_id
+      priority = 1
+    }
+    slot_priorities {
+      slot_id  = aws_lexv2models_slot.min_amount_slot.slot_id
+      priority = 2
+    }
 
 
   depends_on = [
@@ -344,6 +354,16 @@ resource "aws_lexv2models_intent" "monthly_summary" {
     }
   }
 
+  # Define the order to elicit month then year
+  slot_priorities {
+    slot_id  = aws_lexv2models_slot.month_slot.slot_id
+    priority = 1
+  }
+  slot_priorities {
+    slot_id  = aws_lexv2models_slot.year_slot.slot_id
+    priority = 2
+  }
+
   depends_on = [
     aws_lexv2models_bot_locale.english_locale
   ]
@@ -535,8 +555,7 @@ resource "aws_lexv2models_slot" "year_slot" {
 }
 
 # -------------------------------------------------------------------
-# Update slot priorities for TransactionSearch 
-# (We are doing this here because we're not able to add it in the actual intent defintion and we're doing it using AWS CLI)
+# Update slot priorities for TransactionSearch
 # -------------------------------------------------------------------
 resource "null_resource" "update_transaction_search_slot_priority" {
   triggers = {
