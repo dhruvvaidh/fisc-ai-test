@@ -559,7 +559,7 @@ resource "null_resource" "update_transaction_search_slot_priority" {
         --output json > intent_config.json
       
       # Remove fields that cause issues
-      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, .intentName)' \
+      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
         intent_config.json > clean_intent.json
       
       # Verify name is removed
@@ -622,7 +622,7 @@ resource "null_resource" "update_monthly_summary_slot_priority" {
         --locale-id en_US \
         --intent-id ${self.triggers.intent_id} \
         --output json > intent_config.json
-      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, , .intentName)' \
+      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name)' \
         intent_config.json > tmp_intent_config.json && mv tmp_intent_config.json intent_config.json
 
       # Inject our two slot priorities
