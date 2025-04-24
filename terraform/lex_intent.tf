@@ -27,7 +27,7 @@ resource "aws_lexv2models_intent" "greeting_intent" {
       message_group {
         message {
           plain_text_message {
-            value = "what can i help you?"
+            value = "Hi there, How can I help you?"
           }
         }
       }
@@ -531,5 +531,125 @@ resource "aws_lexv2models_slot" "year_slot" {
 
   depends_on = [
     aws_lexv2models_intent.monthly_summary
+  ]
+}
+
+# -------------------------------------------------------------------
+# Update slot priorities for TransactionSearch 
+# (We are doing this here because we're not able to add it in the actual intent defintion and we're doing it using AWS CLI)
+# -------------------------------------------------------------------
+resource "null_resource" "update_transaction_search_slot_priority" {
+  triggers = {
+    bot_id               = aws_lexv2models_bot.finance_assistant.id
+    intent_id            = aws_lexv2models_intent.transaction_search.intent_id
+    merchant_slot_id     = aws_lexv2models_slot.merchant_slot.slot_id
+    min_amount_slot_id   = aws_lexv2models_slot.min_amount_slot.slot_id
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      set -xe
+
+      # Pull existing intent, strip metadata
+      aws lexv2-models describe-intent \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --intent-id ${self.triggers.intent_id} \
+        --output json > intent_config.json
+      
+      # Remove fields that cause issues
+      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, .intentName)' \
+        intent_config.json > clean_intent.json
+      
+      # Verify name is removed
+      if jq -e 'has("name")' clean_intent.json; then
+        echo "WARNING: name field still present, removing explicitly"
+        jq 'del(.name)' clean_intent.json > final_intent.json
+      else
+        cp clean_intent.json final_intent.json
+      fi
+
+      # Inject our slot priorities
+      jq --arg m "${self.triggers.merchant_slot_id}" \
+         --arg n "${self.triggers.min_amount_slot_id}" \
+         '.slotPriorities = [
+             {"priority":1,"slotId": $m},
+             {"priority":2,"slotId": $n}
+           ]' \
+        final_intent.json > updated_intent.json
+
+      # Push it back
+      aws lexv2-models update-intent \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --intent-id ${self.triggers.intent_id} \
+        --cli-input-json file://updated_intent.json
+
+      echo "✅ Updated slotPriority on TransactionSearch"
+    EOT
+    interpreter = ["bash", "-c"]
+  }
+
+  depends_on = [
+    aws_lexv2models_intent.transaction_search,
+    aws_lexv2models_slot.merchant_slot,
+    aws_lexv2models_slot.min_amount_slot,
+  ]
+}
+
+
+# -------------------------------------------------------------------
+# Update slot priorities for MonthlySummary
+# -------------------------------------------------------------------
+resource "null_resource" "update_monthly_summary_slot_priority" {
+  triggers = {
+    bot_id          = aws_lexv2models_bot.finance_assistant.id
+    intent_id       = aws_lexv2models_intent.monthly_summary.intent_id
+    month_slot_id   = aws_lexv2models_slot.month_slot.slot_id
+    year_slot_id    = aws_lexv2models_slot.year_slot.slot_id
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      set -xe
+
+      # Pull existing intent, strip metadata
+      aws lexv2-models describe-intent \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --intent-id ${self.triggers.intent_id} \
+        --output json > intent_config.json
+      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, , .intentName)' \
+        intent_config.json > tmp_intent_config.json && mv tmp_intent_config.json intent_config.json
+
+      # Inject our two slot priorities
+      jq --arg m "${self.triggers.month_slot_id}" \
+         --arg y "${self.triggers.year_slot_id}" \
+         '.slotPriorities = [
+             {"priority":1,"slotId": $m},
+             {"priority":2,"slotId": $y}
+           ]' \
+        intent_config.json > updated_intent.json
+
+      # Push it back
+      aws lexv2-models update-intent \
+        --bot-id ${self.triggers.bot_id} \
+        --bot-version DRAFT \
+        --locale-id en_US \
+        --intent-id ${self.triggers.intent_id} \
+        --cli-input-json file://updated_intent.json
+
+      echo "✅ Updated slotPriority on MonthlySummary"
+    EOT
+    interpreter = ["bash", "-c"]
+  }
+
+  depends_on = [
+    aws_lexv2models_intent.monthly_summary,
+    aws_lexv2models_slot.month_slot,
+    aws_lexv2models_slot.year_slot,
   ]
 }
