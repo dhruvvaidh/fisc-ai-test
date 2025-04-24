@@ -992,8 +992,7 @@ resource "null_resource" "update_get_spending_by_category_slot_priorities" {
 
       echo "🛠️ Injecting slot priorities..."
       jq --arg cat "$SLOT_ID_CATEGORY" --arg tp "$SLOT_ID_TIMEPERIOD" \
-        '.intentName = $name
-        |.slotPriorities = [{"priority": 1, "slotId": $cat}, {"priority": 2, "slotId": $tp}]' \
+        '.slotPriorities = [{"priority": 1, "slotId": $cat}, {"priority": 2, "slotId": $tp}]' \
         intent_config.json > updated_intent.json
 
       echo "🚀 Updating Lex intent..."

@@ -573,8 +573,7 @@ resource "null_resource" "update_transaction_search_slot_priority" {
       # Inject our slot priorities
       jq --arg m "${self.triggers.merchant_slot_id}" \
          --arg n "${self.triggers.min_amount_slot_id}" \
-         '.intentName = $name
-         |.slotPriorities = [
+         '.slotPriorities = [
              {"priority":1,"slotId": $m},
              {"priority":2,"slotId": $n}
            ]' \
@@ -623,14 +622,13 @@ resource "null_resource" "update_monthly_summary_slot_priority" {
         --locale-id en_US \
         --intent-id ${self.triggers.intent_id} \
         --output json > intent_config.json
-      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name , .intentName)' \
+      jq 'del(.creationDateTime, .lastUpdatedDateTime, .version, .name, , .intentName)' \
         intent_config.json > tmp_intent_config.json && mv tmp_intent_config.json intent_config.json
 
       # Inject our two slot priorities
       jq --arg m "${self.triggers.month_slot_id}" \
          --arg y "${self.triggers.year_slot_id}" \
-         '.intentName = $name
-         |.slotPriorities = [
+         '.slotPriorities = [
              {"priority":1,"slotId": $m},
              {"priority":2,"slotId": $y}
            ]' \
